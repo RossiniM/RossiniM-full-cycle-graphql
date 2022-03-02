@@ -1,0 +1,20 @@
+type Category {
+    id:ID!
+    name: String!
+    description: String
+    courses: [Course!]!
+}
+type Course{
+    id:ID!
+    name:String!
+    description:String
+    category:Category!
+    chapters: [Chapter!]
+}
+
+type Chapter {
+    id:ID!
+    name:String!
+    course: Course!
+    category: Category!
+}
