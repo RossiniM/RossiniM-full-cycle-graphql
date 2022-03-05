@@ -8,19 +8,56 @@ import (
 	"fmt"
 	"github.com/RossiniM/full-cycle-graphql/graph/generated"
 	"github.com/RossiniM/full-cycle-graphql/graph/model"
+	"time"
 )
 
 func (r *mutationResolver) CreateCategory(ctx context.Context, input model.NewCategory) (*model.Category, error) {
-	panic(fmt.Errorf("not implemented"))
+	category := model.Category{
+		ID: fmt.Sprintf("T%d", time.Now().UnixMilli()),
+		Name: input.Name,
+		Description: &input.Description,
+	}
+	r.Categories = append(r.Categories, &category)
+	return &category,nil
 }
 
 func (r *mutationResolver) CreateCourse(ctx context.Context, input model.NewCourse) (*model.Course, error) {
-	panic(fmt.Errorf("not implemented"))
+
+	var category *model.Category
+
+	for _,v := range r.Categories{
+		if v.ID == input.CategoryID{
+			category =v
+		}
+	}
+	course := model.Course{
+		ID: fmt.Sprintf("T%d", time.Now().UnixMilli()),
+		Name: input.Name,
+		Description: &input.Description,
+		Category: category,
+	}
+	r.Coursers = append(r.Coursers, &course)
+
+	return &course, nil
 }
 
 func (r *mutationResolver) CreateChapter(ctx context.Context, input model.NewChapter) (*model.Chapter, error) {
-	panic(fmt.Errorf("not implemented"))
-}
+	var course *model.Course
+
+	for _,v := range r.Coursers{
+		if v.ID == input.CourseID{
+			course =v
+		}
+	}
+
+	chapter := model.Chapter{
+		ID: fmt.Sprintf("T%d", time.Now().UnixMilli()),
+		Name: input.Name,
+		Course: course,
+	}
+	r.Chapters = append(r.Chapters, &chapter)
+
+	return &chapter, nil}
 
 func (r *queryResolver) Categories(ctx context.Context) ([]*model.Category, error) {
 	return r.Resolver.Categories, nil
