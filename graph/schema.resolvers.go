@@ -6,7 +6,6 @@ package graph
 import (
 	"context"
 	"fmt"
-
 	"github.com/RossiniM/full-cycle-graphql/graph/generated"
 	"github.com/RossiniM/full-cycle-graphql/graph/model"
 )
@@ -24,15 +23,15 @@ func (r *mutationResolver) CreateChapter(ctx context.Context, input model.NewCha
 }
 
 func (r *queryResolver) Categories(ctx context.Context) ([]*model.Category, error) {
-	panic(fmt.Errorf("not implemented"))
+	return r.Resolver.Categories, nil
 }
 
 func (r *queryResolver) Courses(ctx context.Context) ([]*model.Course, error) {
-	panic(fmt.Errorf("not implemented"))
+	return r.Resolver.Coursers, nil
 }
 
 func (r *queryResolver) Chapters(ctx context.Context) ([]*model.Chapter, error) {
-	panic(fmt.Errorf("not implemented"))
+	return r.Resolver.Chapters, nil
 }
 
 // Mutation returns generated.MutationResolver implementation.
